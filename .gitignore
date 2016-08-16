@@ -1,12 +1,22 @@
-*.class
+# Ignore .svn metadata files
+.svn
+ 
+#Ignore Maven generated target folders
+target
+target.bak
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# Ignore eclipse files
+.project
+.classpath
+.settings
+Thumbs.db
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# Ignore IDEA files
+*.iml
+*.ipr
+*.iws
+/.idea
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+.faces-config.xml.jsfdia
+.externalToolBuilders
+.metadata
