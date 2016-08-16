@@ -56,7 +56,7 @@ public class CGLibDynamicProxy implements MethodInterceptor {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         Greeting greeting = CGLibDynamicProxy.getInstance().getProxy(GreetingImpl.class);
         greeting.doSomething();

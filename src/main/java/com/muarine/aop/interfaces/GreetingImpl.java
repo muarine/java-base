@@ -19,8 +19,9 @@ public class GreetingImpl implements Greeting{
 
 
     @Override
-    public void doSomething() {
+    public void doSomething() throws Exception {
         System.out.println("doSomething...");
+        throw new Exception("throw new Exception");
     }
 
     public void before(){
@@ -32,7 +33,7 @@ public class GreetingImpl implements Greeting{
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         GreetingImpl greeting = new GreetingImpl();
         greeting.before();

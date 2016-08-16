@@ -18,12 +18,14 @@ package com.muarine.aop;
 public class GreetingMethodAdvice implements MethodAdvice{
 
     @Override
-    public void before() {
+    public Integer before() {
         System.out.println("factory before");
+        return 1;
     }
 
     @Override
-    public void after() {
+    public Integer after() {
         System.out.println("factory after");
+        return 2;
     }
 }

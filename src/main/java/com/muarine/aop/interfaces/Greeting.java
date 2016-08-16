@@ -17,6 +17,6 @@ package com.muarine.aop.interfaces;
  */
 public interface Greeting {
 
-    void doSomething();
+    void doSomething() throws Exception;
 
 }

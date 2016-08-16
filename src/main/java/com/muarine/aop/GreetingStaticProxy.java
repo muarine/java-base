@@ -27,13 +27,13 @@ public class GreetingStaticProxy implements Greeting {
     }
 
     @Override
-    public void doSomething() {
+    public void doSomething() throws Exception {
         greetingImpl.before();
         greetingImpl.doSomething();
         greetingImpl.after();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         GreetingStaticProxy proxy = new GreetingStaticProxy(new GreetingImpl());
         proxy.doSomething();

@@ -54,9 +54,16 @@ public class ProxyFactory implements MethodInterceptor {
      */
     @Override
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-        methodAdvice.before();
-        Object result = methodProxy.invokeSuper(o , objects);
-        methodAdvice.after();
+        Integer before = methodAdvice.before();
+        System.out.println("before return " + before);
+        Object result = null;
+        try{
+            result = methodProxy.invokeSuper(o , objects);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        Integer after = methodAdvice.after();
+        System.out.println("after return " + after);
         return result;
     }
 
@@ -71,6 +78,10 @@ public class ProxyFactory implements MethodInterceptor {
         factory.setAdvice(new GreetingMethodAdvice());
 
         Greeting greeting = factory.getProxy();
-        greeting.doSomething();
+        try {
+            greeting.doSomething();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

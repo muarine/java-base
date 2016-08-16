@@ -57,7 +57,7 @@ public class JDKDynamicProxy implements InvocationHandler{
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         Greeting greeting = new JDKDynamicProxy(new GreetingImpl()).getProxy();
         greeting.doSomething();

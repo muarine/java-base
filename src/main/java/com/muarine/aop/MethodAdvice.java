@@ -17,8 +17,8 @@ package com.muarine.aop;
  */
 public interface MethodAdvice {
 
-    void before();
+    <T> T before();
 
-    void after();
+    <T> T after();
 
 }
