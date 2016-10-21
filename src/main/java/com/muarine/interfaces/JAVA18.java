@@ -23,7 +23,7 @@ public interface JAVA18 {
 
     double calculates(int a);
 
-    default double calucate(int a){
-        return Math.sqrt(a);
-    }
+//    default double calucate(int a){
+//        return Math.sqrt(a);
+//    }
 }

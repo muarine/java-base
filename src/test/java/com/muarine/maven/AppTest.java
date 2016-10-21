@@ -64,7 +64,7 @@ public class AppTest
             List<Object> list = new ArrayList<Object>();
             for (Class paramClazz : method.getParameterTypes()){
                 System.out.println("param name:" + paramClazz.getName());
-                System.out.println("param type:" + paramClazz.getTypeName());
+//                System.out.println("param type:" + paramClazz.getTypeName());
                 list.add(paramClazz.getClass().getName());
             }
 
