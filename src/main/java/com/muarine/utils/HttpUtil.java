@@ -8,7 +8,7 @@
 
 package com.muarine.utils;
 
-import com.alibaba.fastjson.JSON;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -29,7 +29,6 @@ import javax.net.ssl.*;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -414,38 +413,53 @@ public class HttpUtil {
 		return httpclient;
 	}
 
+
+	/**
+	 * POST 表单提交
+	 *
+	 * @param url
+	 * @param paramMap
+     */
+	public static void asyncSendPost(String url , Map<String,Object> paramMap){
+		// 表单提交
+		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+		Iterator it = paramMap.entrySet().iterator();
+		while(it.hasNext()){
+			Map.Entry<String ,Object> entry = (Map.Entry<String, Object>) it.next();
+			nvps.add(new BasicNameValuePair(entry.getKey() , (String) entry.getValue()));
+		}
+		try {
+			_asyncSendPost(url, new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+		}catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * POST JSON提交
+	 *
+	 * @param url
+	 * @param postJson
+     */
+	public static void asyncSendPost(String url , String postJson){
+		StringEntity stringEntity = new StringEntity(postJson , "text/json");
+		stringEntity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON));
+		_asyncSendPost(url , stringEntity);
+	}
+
 	/**
 	 * 异步发送POST请求
 	 * @param url
 	 * @param paramMap
 	 * @param type 	JSON FORM
      */
-	public static void asyncSendPost(String url , Map<String,String> paramMap , String type){
+	public static void _asyncSendPost(String url , HttpEntity httpEntity){
 		final CloseableHttpAsyncClient httpclient = getCloseableHttpAsyncClient(url);
 
 		try {
 			httpclient.start();
 			HttpPost post = new HttpPost(url);
-			if(type.equals("JSON")){
-				// json
-				post.addHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON);
-				// 将JSON进行UTF-8编码,以便传输中文
-				String encoderJson = URLEncoder.encode(JSON.toJSONString(paramMap), HTTP.UTF_8);
-				StringEntity se = new StringEntity(encoderJson , "text/json");
-				se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON));
-				post.setEntity(se);
-			}else{
-				if(paramMap != null && paramMap.size() > 0){
-					// 表单提交
-					List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-					Iterator it = paramMap.entrySet().iterator();
-					while(it.hasNext()){
-						Map.Entry<String ,String > entry = (Map.Entry<String, String>) it.next();
-						nvps.add(new BasicNameValuePair(entry.getKey() , entry.getValue()));
-					}
-					post.setEntity(new UrlEncodedFormEntity(nvps , HTTP.UTF_8));
-				}
-			}
 
 			Future<HttpResponse> future = httpclient.execute(post, new FutureCallback<HttpResponse>() {
 				@Override
@@ -479,9 +493,6 @@ public class HttpUtil {
 					}
 				}
 			});
-
-//			future.get();
-
 		}catch(Exception e){
 			e.printStackTrace();
 		}
