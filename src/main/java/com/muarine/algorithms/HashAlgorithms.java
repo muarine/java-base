@@ -94,8 +94,9 @@ public class HashAlgorithms {
     public static int bernstein(String key) {
         int hash = 0;
         int i;
-        for (i = 0; i < key.length(); ++i)
+        for (i = 0; i < key.length(); ++i) {
             hash = 33 * hash + key.charAt(i);
+        }
         return hash;
     }
 
@@ -106,22 +107,30 @@ public class HashAlgorithms {
         int hash = key.length, i, len = key.length;
         for (i = 0; i < (len << 3); i += 8) {
             char k = key[i >> 3];
-            if ((k & 0x01) == 0)
-                hash ^= tab[i + 0];
-            if ((k & 0x02) == 0)
+            if ((k & 0x01) == 0) {
+                hash ^= tab[i];
+            }
+            if ((k & 0x02) == 0) {
                 hash ^= tab[i + 1];
-            if ((k & 0x04) == 0)
+            }
+            if ((k & 0x04) == 0) {
                 hash ^= tab[i + 2];
-            if ((k & 0x08) == 0)
+            }
+            if ((k & 0x08) == 0) {
                 hash ^= tab[i + 3];
-            if ((k & 0x10) == 0)
+            }
+            if ((k & 0x10) == 0) {
                 hash ^= tab[i + 4];
-            if ((k & 0x20) == 0)
+            }
+            if ((k & 0x20) == 0) {
                 hash ^= tab[i + 5];
-            if ((k & 0x40) == 0)
+            }
+            if ((k & 0x40) == 0) {
                 hash ^= tab[i + 6];
-            if ((k & 0x80) == 0)
+            }
+            if ((k & 0x80) == 0) {
                 hash ^= tab[i + 7];
+            }
         }
         return (hash & mask);
     }
