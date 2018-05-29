@@ -246,6 +246,7 @@ public class HttpUtil {
 
     static class miTM implements TrustManager,
             X509TrustManager {
+		@Override
         public java.security.cert.X509Certificate[] getAcceptedIssuers() {
             return null;
         }
@@ -260,13 +261,15 @@ public class HttpUtil {
             return true;
         }
 
-        public void checkServerTrusted(
+        @Override
+		public void checkServerTrusted(
                 java.security.cert.X509Certificate[] certs, String authType)
                 throws CertificateException {
             return;
         }
 
-        public void checkClientTrusted(
+        @Override
+		public void checkClientTrusted(
                 java.security.cert.X509Certificate[] certs, String authType)
                 throws CertificateException {
             return;
